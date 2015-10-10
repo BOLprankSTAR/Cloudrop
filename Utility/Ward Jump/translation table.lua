@@ -12,21 +12,50 @@
 	Key Binding:
 		Key Binding:
 		Ward Jump key settings:
-		quotequotequote:
 	Graphics:
 		general:
 		Enable all graphics:
 		ward jump:
 		Jump range:
+			jump range:
+			Draw jump range:
+			Choose a color (ARGB):
+			lag-free-circles:
+			Use lag-free-circles:
+			Set circle segments:
+			Set circle width:
 		Ward position:
+			ward position:
+			Draw ward position:
+			Choose a color (ARGB):
+			lag-free-circles:
+			Use lag-free-circles:
+			Set circle segments:
+			Set circle width:
 		Unit scan:
+			scan radius:
+			Draw scan radius:
+			Choose scan (available) color (ARGB):
+			Choose scan (unavailable) color (ARGB):
+			scanned units:
+			Draw scanned units:
+			Choose a color (ARGB):
+			lag-free-circles:
+			Use lag-free-circles:
+			Set circle segments:
+			Set circle width:
 		Jump information:
-		quotequotequote
+			jump information:
+			Draw jump information:
+			Choose a color (ARGB):
+			position:
+			Adjust abszisse:
+			Adjust ordinate:
+			Choose the text size:
 	ward jump settings:
 	Ward Jump:
 		unit scan:
 		Adjust scan radius:
-		quotequotequote:
 	Priorities:
 		wards:
 		Use Stealth Ward:
@@ -45,23 +74,42 @@
 		others:
 		Use (Ruby) Sightstone
 		Set priority:
-		quotequotequote:
 	other settings:
 	Language:
 		language:
 		Choose a language:
 		translated by prankSTAR:
-		quotequotequote:
 	MenuConfig:
 		gamestart:
 		Activate message on GameStart:
 		settings storage:
 		Reset settings:
-		quotequotequote:
 	about the script:
 	Version:
 	Author:
 	Updated:
 	Optimized:
 	next generation script:
+
+	Unit detected:
+	
+	Warding Totem:
+	Greater Totem:
+	Greater Stealth Totem:
+	(Ruby) Sightstone:
+	Stealth Ward:
+	Greater Vision Totem:
+	Vision Ward:
+
+	C H A M P I O N - Q U O T E S
+	find your center.:									-Lee
+	Waste not a minute!: 								-Lee
+	Imagine if I had a real weapon!: 					-Jax
+	Blood for Noxus!: 									-Kata
+	I can't wait.: 										-kata
+	Topple their forces!: 								-JarvanIV
+	To the point.: 										-Kata
+	Ready for battle!: 									-Jax
+	Their heartbeats quicken.: 							-Lee
+	I love a challenge.: 								-jarvan IV
 --]]
