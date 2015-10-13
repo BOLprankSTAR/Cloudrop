@@ -5,7 +5,7 @@
 	|  |  |  |.---.-.----.--|  |  _|     |.--.--.--------.-----.
 	|  |  |  ||  _  |   _|  _  | |       ||  |  |        |  _  |
 	|________||___._|__| |_____| |_______||_____|__|__|__|   __| by prankSTAR
-	v2.0.2                                               |__|   
+	v2.0.5                                               |__|   
 
 	----------------------------------------------------------------------------------------------------
 
@@ -40,6 +40,8 @@
 						- added JarvanIV Q + E or Q to flag
 		2.0.4 			- finished french translation
 						- changed ward jump range from 700 to 690 (expect Jarvan IV)
+		2.0.5 			- changed puu.sh links to my Github repository
+						- removed useless content from folder content
 
 	----------------------------------------------------------------------
 
@@ -74,10 +76,9 @@ class("PWJ")
 	function PWJ:Load_Vars()
 		Load_Globals()
 
-		self.version 	= "2.0.3"
+		self.version 	= "2.0.5"
 		self.author 	= "prankSTAR"
-		self.updated 	= "10.10.2015"
-		self.optimized 	= "5.19"
+		self.updated 	= "13.10.2015"
 
 		self.updateB 	= true
 		self.updateL 	= false
@@ -85,10 +86,10 @@ class("PWJ")
 		self.updateD 	= false
 		self.updateN 	= false
 
-		self.menu 		= MenuConfig("PWJ12", "[PS] Ward Jump")
+		self.menu 		= MenuConfig("PWJ", "[PS] Ward Jump")
 
 		self.menuL = {}
-			self.menuL["general"] = "<center><img style=\"width:160px;height:auto\" src=\"http://puu.sh/kDkZb/a8c0af471b.png\"></center>"
+			self.menuL["general"] = "<center><img style=\"width:160px;height:auto\" src=\"https://raw.githubusercontent.com/BOLprankSTAR/Cloudrop/master/Utility/Ward%20Jump/Image/banner.png\"></center>"
 
 		self.menuN = {}
 			self.menuN["sightWard"] 			= { img = "<img style=\"width:45px;height:auto\" src=\"https://raw.githubusercontent.com/BOLprankSTAR/Cloudrop/master/Utility/Ward%20Jump/Sprites/sightWard.png\">" 																																											}
@@ -206,7 +207,6 @@ class("PWJ")
 			self.menuT[13] 											= { icon = "fa-info-circle", 		note = nil,									pType = "Button",		pVar = "version", 					pName = { english = "Version: " .. self.version, 			german = "Version: " .. self.version, 						french = "Version: " .. self.version,												newlanguage = "", } 																																								}
 			self.menuT[14] 											= { icon = "fa-user", 				note = nil,									pType = "Button",		pVar = "author", 					pName = { english = "Author: " .. self.author, 				german = "Author: " .. self.author, 						french = "Auteur: " .. self.author,													newlanguage = "", } 																																								}
 			self.menuT[15] 											= { icon = "fa-upload", 			note = nil,									pType = "Button",		pVar = "update", 					pName = { english = "Updated: " .. self.updated, 			german = "Letzte Aktualisierung: " .. self.updated, 		french = "Mise à jour: " .. self.updated,											newlanguage = "", } 																																								}
-			self.menuT[16] 											= { icon = "fa-code-fork", 			note = nil,									pType = "Button",		pVar = "optimized", 				pName = { english = "Optimized: " .. self.optimized, 		german = "Optimized: " .. self.optimized, 					french = "Optimis&#233;: " .. self.optimized,										newlanguage = "", } 																																								}
 			self.menuT[17] 											= { icon = nil, 					note = nil,									pType = "SectionE",		pVar = "header6", 					pName = { english = "next generation script", 				german = "skript der nächsten generation", 					french = "Prochaine g&#233;n&#233;ration de scripts",								newlanguage = "", } 																																								}
 	
 		self.wardTable 												= {}
@@ -314,24 +314,6 @@ class("PWJ")
 		if self.menu.menuconfig.start:Value() then
 			Game.Chat.Print("<b><font color=\"#80c31b\">[PS] Ward Jump</font></b> <font color=\"#FFFFFF\">- Loaded successfully <u>v" .. self.version .. "</u>.")
 		end
-	end
-
-	function PWJ:Update_Language()
-		self.updateL = true
-		self:Load_Menu()
-		
-		local number, string = self.menu.language.language:Value()
-		local language = (({ [1] = "english", [2] = "german", [3] = "french", [4] = "dutch", [5] = "korean", [6] = "greek", [7] = "chinese", [8] = "portuguesebrazil", [9] = "turkish" })[tonumber(number)])
-		
-		self.menu:Name(self.menuT[1].pName[language])
-	end
-
-	function PWJ:Update_Default()
-		self.updateD = true
-		self:Load_Menu()
-		DelayAction(function()
-			self:Update_Language()
-		end, .2)
 	end
 
 	function PWJ:KeyCallback()
