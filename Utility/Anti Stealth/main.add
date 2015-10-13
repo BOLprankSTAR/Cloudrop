@@ -1,0 +1,412 @@
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+--[[
+	
+	 _______         __   __   _______ __                __ __   __    
+	|   _   |.-----.|  |_|__| |     __|  |_.-----.---.-.|  |  |_|  |--.
+	|       ||     ||   _|  | |__     |   _|  -__|  _  ||  |   _|     |
+	|___|___||__|__||____|__| |_______|____|_____|___._||__|____|__|__| by prankSTAR
+	v2.0.0
+
+	----------------------------------------------------------------------------------------------------
+
+	Features
+
+	----------------------------------------------------------------------
+
+	Changelog
+
+	----------------------------------------------------------------------
+
+	To-Do
+
+	----------------------------------------------------------------------
+
+--]]
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+class("PAS")
+
+	----------------------------------------------------------------------
+
+	function PAS:__init()
+		self:Load_Vars()
+		self:Load_Menu()
+		self:Load_Prin()
+	end
+
+	function PAS:Load_Vars()
+		Load_Globals()
+
+		self.version 	= "2.0.0"
+		self.author 	= "prankSTAR"
+		self.updated 	= "11.10.2015"
+
+		self.updateB 	= true
+		self.updateL 	= false
+		self.updateI 	= false
+		self.updateD 	= false
+		self.updateN 	= false
+
+		self.menu 		= MenuConfig("PAS", "[PS] Anti Stealth")
+
+		self.menuL = {}
+			self.menuL["general"] = "<center><img style=\"width:160px;height:auto\" src=\"http://puu.sh/kIDG5/ae1a5aa61f.png\"></center>"
+
+		self.menuT 													= {																																																																																																														}
+			self.menuT[1] 											= { icon = nil, 					note = nil,									pType = "SectionS",		pVar = "header1", 					pName = { english = "[PS] Anti Stealth", 					german = "[PS] Anti Unsichtbarkeit", 						newlanguage = "", } 																																								}
+			self.menuT[2] 											= { icon = nil, 					note = nil,									pType = "Empty",		pVar = "logo", 						pName = { english = self.menuL.general, 					german = self.menuL.general, 								newlanguage = "", } 																																								}
+			self.menuT[3] 											= { icon = nil, 					note = nil,									pType = "SectionS",		pVar = "header2", 					pName = { english = "general settings", 					german = "allgemeine einstellungen", 						newlanguage = "", } 																																								}
+			self.menuT[4] 											= { icon = "fa-keyboard-o", 		note = nil,									pType = "Menu",			pVar = "keys", 						pName = { english = "Key Binding", 							german = "Tastenbelegung", 									newlanguage = "", } 																																								}
+				self.menuT[4]["submenu"] 							= {																																																																																																														}
+					self.menuT[4].submenu[1] 						= { icon = nil, 					note = nil,									pType = "SectionS",		pVar = "header1", 					pName = { english = "Key Binding", 							german = "Tastenbelegung", 									newlanguage = "", } 																																								}
+					self.menuT[4].submenu[2] 						= { icon = "fa-key", 				note = nil,									pType = "KeyBinding",	pVar = "key", 						pName = { english = "Anti Stealth key settings", 			german = "Anti Unsichtbarkeir Tastenbelegung", 				newlanguage = "", }, pKey1 = "Z", pKey1Toggle = true, pDefault = true, pCallback = function() end, pForceDefault = true, pKey2 = nil, pKey2Toggle = nil 							}
+					self.menuT[4].submenu[3] 						= { icon = nil, 					note = nil,									pType = "SectionE",		pVar = "header2", 					pName = { english = "quotequotequote", 						german = "quotequotequote", 								newlanguage = "", } 																																								}
+			self.menuT[5] 											= { icon = "fa-tint", 				note = nil,									pType = "Menu",			pVar = "graphics", 					pName = { english = "Graphics", 							german = "Grafiken", 										newlanguage = "", } 																																								}
+				self.menuT[5]["submenu"] 							= {																																																																																																														}
+					self.menuT[5].submenu[1] 						= { icon = nil, 					note = nil,									pType = "SectionS",		pVar = "header1", 					pName = { english = "general", 								german = "allgemein", 										newlanguage = "", } 																																								}
+					self.menuT[5].submenu[2] 						= { icon = "fa-check-square-o",		note = nil,									pType = "Boolean",		pVar = "enable", 					pName = { english = "Enable all graphics", 					german = "Aktiviere alle Grafiken", 						newlanguage = "", }, pDefault = true, pCallback = nil, pForceDefault = false 																										}
+					self.menuT[5].submenu[3] 						= { icon = nil, 					note = nil,									pType = "SectionS",		pVar = "header2", 					pName = { english = "anti stealth", 						german = "anti unsichtbarkeit", 							newlanguage = "", } 																																								}
+			self.menuT[6] 											= { icon = nil, 					note = nil,									pType = "SectionS",		pVar = "header3", 					pName = { english = "anti wardjump settings", 				german = "anti unsichtbarkeit einstellungen",				newlanguage = "", } 																																								}
+			self.menuT[7] 											= { icon = nil, 					note = nil,									pType = "Menu",			pVar = "spells", 					pName = { english = "Spell configuration", 					german = "Fähigkeiten Konfigurator",						newlanguage = "", } 																																								}
+			self.menuT[8] 											= { icon = nil, 					note = nil,									pType = "SectionS",		pVar = "header4", 					pName = { english = "other settings", 						german = "sonstige einstellungen", 							newlanguage = "", } 																																								}
+			self.menuT[9] 											= { icon = "fa-flag", 				note = nil,									pType = "Menu",			pVar = "language", 					pName = { english = "Language", 							german = "Sprache", 										newlanguage = "", } 																																								}
+				self.menuT[9]["submenu"] 							= {																																																																																																														}
+					self.menuT[9].submenu[1] 						= { icon = nil, 					note = nil,									pType = "SectionS",		pVar = "header1", 					pName = { english = "language", 							german = "sprache", 										newlanguage = "", } 																																								}
+					self.menuT[9].submenu[2] 						= { icon = "fa-sort-alpha-asc", 	note = nil,									pType = "DropDown",		pVar = "language", 					pName = { english = "Choose a language", 					german = "Wähle eine Sprache", 								newlanguage = "", }, pDefault = 1, pDropTable = { "English", "Deutsch", "Français" }, pCallback = function() self:Update_Language() end, pForceDefault = false 						}
+					self.menuT[9].submenu[3] 						= { icon = "fa-info", 				note = nil,									pType = "Button",		pVar = "info", 						pName = { english = "translated by prankSTAR", 				german = "Übersetzt von prankSTAR", 						newlanguage = "", } 																																								}
+					self.menuT[9].submenu[4] 						= { icon = nil, 					note = nil,									pType = "SectionE",		pVar = "header2", 					pName = { english = "quotequotequote", 						german = "quotequotequote", 								newlanguage = "", } 																																								}
+			self.menuT[10] 											= { icon = "fa-folder", 			note = nil,									pType = "Menu",			pVar = "menuconfig", 				pName = { english = "MenuConfig", 							german = "Menu", 											newlanguage = "", } 																																								}
+				self.menuT[10]["submenu"] 							= {																																																																																																														}
+					self.menuT[10].submenu[1] 						= { icon = nil, 					note = nil,									pType = "SectionS",		pVar = "header1", 					pName = { english = "gamestart", 							german = "spielbeginn", 									newlanguage = "", } 																																								}
+					self.menuT[10].submenu[2] 						= { icon = "fa-check-square-o",		note = nil,									pType = "Boolean",		pVar = "start", 					pName = { english = "Activate message on GameStart", 		german = "Aktiviere Nachricht am Spielanfang", 				newlanguage = "", }, pDefault = true, pCallback = nil, pForceDefault = false 																										}
+					self.menuT[10].submenu[3] 						= { icon = nil, 					note = nil,									pType = "SectionS",		pVar = "header2", 					pName = { english = "settings storage", 					german = "Einstellungs Speicherung", 						newlanguage = "", } 																																								}
+					self.menuT[10].submenu[4] 						= { icon = "fa-check-square-o",		note = nil,									pType = "Boolean",		pVar = "reset", 					pName = { english = "Reset settings", 						german = "Einstellungen zurücksetzen", 						newlanguage = "", }, pDefault = false, pCallback = function() self:Update_Default() end, pForceDefault = true 																		}
+					self.menuT[10].submenu[5] 						= { icon = nil, 					note = nil,									pType = "SectionE",		pVar = "header3", 					pName = { english = "quotequotequote", 						german = "quotequotequote", 								newlanguage = "", } 																																								}
+			self.menuT[11] 											= { icon = nil, 					note = nil,									pType = "SectionS",		pVar = "header5", 					pName = { english = "about the script", 					german = "über das skript", 								newlanguage = "", } 																																								}
+			self.menuT[12] 											= { icon = "fa-info-circle", 		note = nil,									pType = "Button",		pVar = "version", 					pName = { english = "Version: " .. self.version, 			german = "Version: " .. self.version, 						newlanguage = "", } 																																								}
+			self.menuT[13] 											= { icon = "fa-user", 				note = nil,									pType = "Button",		pVar = "author", 					pName = { english = "Author: " .. self.author, 				german = "Author: " .. self.author, 						newlanguage = "", } 																																								}
+			self.menuT[14] 											= { icon = "fa-upload", 			note = nil,									pType = "Button",		pVar = "update", 					pName = { english = "Updated: " .. self.updated, 			german = "Letzte Aktualisierung: " .. self.updated, 		newlanguage = "", } 																																								}
+			self.menuT[15] 											= { icon = nil, 					note = nil,									pType = "SectionE",		pVar = "header6", 					pName = { english = "next generation script", 				german = "skript der nächsten generation", 					newlanguage = "", } 																																								}--]]
+
+			--[[self.menuT[1] 											= { icon = nil, 					note = nil,									pType = "SectionS",		pVar = "header1", 					pName = { english = "[PS] Anti Stealth", 					german = "[PS] Augen Sprung", 							french = "[PS] Ward Jump",															newlanguage = "", } 																																								}
+			self.menuT[2] 											= { icon = nil, 					note = nil,									pType = "Empty",		pVar = "logo", 						pName = { english = self.menuL.general, 					german = self.menuL.general, 								french = self.menuL.general,														newlanguage = "", } 																																								}
+			self.menuT[3] 											= { icon = nil, 					note = nil,									pType = "SectionS",		pVar = "header2", 					pName = { english = "general settings", 					german = "allgemeine einstellungen", 						french = "Param&#232;tres g&#233;n&#233;raux",										newlanguage = "", } 																																								}
+			self.menuT[4] 											= { icon = "fa-keyboard-o", 		note = nil,									pType = "Menu",			pVar = "keys", 						pName = { english = "Key Binding", 							german = "Tastenbelegung", 									french = "Touches",																	newlanguage = "", } 																																								}
+				self.menuT[4]["submenu"] 							= {																																																																																																																																			}
+					self.menuT[4].submenu[1] 						= { icon = nil, 					note = nil,									pType = "SectionS",		pVar = "header1", 					pName = { english = "Key Binding", 							german = "Tastenbelegung", 									french = "Touches",																	newlanguage = "", } 																																								}
+					self.menuT[4].submenu[2] 						= { icon = "fa-key", 				note = nil,									pType = "KeyBinding",	pVar = "key", 						pName = { english = "Ward Jump key settings", 				german = "Augen Sprung Tastenbelegung", 					french = "Param&#232;trage de la touche de Ward Jump",								newlanguage = "", }, pKey1 = "T", pKey1Toggle = false, pDefault = false, pCallback = function() self:KeyCallback(state) end, pForceDefault = true, pKey2 = nil, pKey2Toggle = nil 	}
+					self.menuT[4].submenu[3] 						= { icon = nil, 					note = "- Lee&#39;Sin",						pType = "SectionE",		pVar = "header2", 					pName = { english = "find your center.", 					german = "finde dein zentrum.", 							french = "Votre volont&#233;, Ma force.", 											newlanguage = "", } 																																																										}
+			self.menuT[5] 											= { icon = "fa-tint", 				note = nil,									pType = "Menu",			pVar = "graphics", 					pName = { english = "Graphics", 							german = "Grafiken", 										french = "Graphiques",																newlanguage = "", } 																																								}
+				self.menuT[5]["submenu"] 							= {																																																																																																																																			}
+					self.menuT[5].submenu[1] 						= { icon = nil, 					note = nil,									pType = "SectionS",		pVar = "header1", 					pName = { english = "general", 								german = "allgemein", 										french = "G&#233;n&#233;ral",														newlanguage = "", } 																																								}
+					self.menuT[5].submenu[2] 						= { icon = "fa-check-square-o",		note = nil,									pType = "Boolean",		pVar = "enable", 					pName = { english = "Enable all graphics", 					german = "Aktiviere alle Grafiken", 						french = "Activer tous les graphiques",												newlanguage = "", }, pDefault = true, pCallback = nil, pForceDefault = false 																										}
+					self.menuT[5].submenu[3] 						= { icon = nil, 					note = nil,									pType = "SectionS",		pVar = "header2", 					pName = { english = "ward jump", 							german = "augen sprung", 									french = "ward jump",																newlanguage = "", } 																																								}
+					self.menuT[5].submenu[4] 						= { icon = "fa-arrow-circle-right", note = nil,									pType = "Menu",			pVar = "range", 					pName = { english = "Jump range", 							german = "Sprung Reichweite", 								french = "Range du saut",															newlanguage = "", } 																																								}
+						self.menuT[5].submenu[4]["submenu"] 		= {																																																																																																																																			}
+							self.menuT[5].submenu[4].submenu[1] 	= { icon = nil, 					note = nil,									pType = "SectionS",		pVar = "header1", 					pName = { english = "jump range", 							german = "sprung reichweite", 								french = "Range du saut",															newlanguage = "", } 																																								}
+							self.menuT[5].submenu[4].submenu[2] 	= { icon = "fa-check-square-o",		note = nil,									pType = "Boolean",		pVar = "range", 					pName = { english = "Draw jump range", 						german = "Zeichne Sprung Reichweite", 						french = "Dessiner la range du saut",												newlanguage = "", }, pDefault = true, pCallback = nil, pForceDefault = false 																										}
+							self.menuT[5].submenu[4].submenu[3] 	= { icon = nil, 					note = nil,									pType = "ColorPick",	pVar = "color", 					pName = { english = "Choose a color (ARGB)", 				german = "Wähle eine Farbe (ARGB)", 						french = "Choississez la couleur (ARGB)",											newlanguage = "", }, pDefault = Graphics.ARGB(255,255,255,255), pCallback = nil, pForceDefault = false 																				}
+							self.menuT[5].submenu[4].submenu[4] 	= { icon = nil, 					note = nil,									pType = "SectionS",		pVar = "header2", 					pName = { english = "lag-free-circles", 					german = "lag-freie-kreise", 								french = "Faibles graphiques ",														newlanguage = "", } 																																								}
+							self.menuT[5].submenu[4].submenu[5] 	= { icon = "fa-check-square-o",		note = nil,									pType = "Boolean",		pVar = "lfc", 						pName = { english = "Use lag-free-circles", 				german = "Verwende Lag-Freie-Kreise", 						french = "Utiliser les faibles graphiques ",										newlanguage = "", }, pDefault = false, pCallback = nil, pForceDefault = false 																										}
+							self.menuT[5].submenu[4].submenu[6] 	= { icon = "fa-arrows-h", 			note = nil,									pType = "Slider",		pVar = "quality", 					pName = { english = "Set circle segments", 					german = "Setze Kreis Segmente", 							french = "D&#233;finisser le nombre de segments de cercle",							newlanguage = "", }, pDefault = 24, pMinValue = 4, pMaxValue = 48, pStep = 4, pCallback = nil, pForceDefault = false 																}
+							self.menuT[5].submenu[4].submenu[7] 	= { icon = "fa-arrows-h", 			note = nil,									pType = "Slider",		pVar = "width", 					pName = { english = "Set circle width", 					german = "Setze Kreis Breite", 								french = "D&#233;finisser la largeur du cercle",									newlanguage = "", }, pDefault = 3, pMinValue = 1, pMaxValue = 10, pStep = 1, pCallback = nil, pForceDefault = false 																}
+							self.menuT[5].submenu[4].submenu[8] 	= { icon = nil, 					note = "- Lee&#39;Sin",						pType = "SectionE",		pVar = "header3", 					pName = { english = "Waste not a minute!", 					german = "Verschwende keine Zeit!", 						french = "Ne perdons pas une minute.", 												newlanguage = "", } 																																																										}
+					self.menuT[5].submenu[5] 						= { icon = "fa-arrow-circle-right", note = nil,									pType = "Menu",			pVar = "wardpos", 					pName = { english = "Ward position", 						german = "Augen Position", 									french = "Position de la Ward",														newlanguage = "", } 																																								}
+						self.menuT[5].submenu[5]["submenu"] 		= {																																																																																																																																			}
+							self.menuT[5].submenu[5].submenu[1] 	= { icon = nil, 					note = nil,									pType = "SectionS",		pVar = "header1", 					pName = { english = "ward position", 						german = "augen position", 									french = "Position des wards",														newlanguage = "", } 																																								}
+							self.menuT[5].submenu[5].submenu[2] 	= { icon = "fa-check-square-o",		note = nil,									pType = "Boolean",		pVar = "position", 					pName = { english = "Draw ward position", 					german = "Zeichne Augen Position", 							french = "Dessiner la postion des wards",											newlanguage = "", }, pDefault = true, pCallback = nil, pForceDefault = false 																										}
+							self.menuT[5].submenu[5].submenu[3] 	= { icon = nil, 					note = nil,									pType = "ColorPick",	pVar = "color", 					pName = { english = "Choose a color (ARGB)", 				german = "Wähle eine Farbe (ARGB)", 						french = "Choississez la couleur (ARGB)",											newlanguage = "", }, pDefault = Graphics.ARGB(200,255,0,60), pCallback = nil, pForceDefault = false 																				}
+							self.menuT[5].submenu[5].submenu[4] 	= { icon = nil, 					note = nil,									pType = "SectionS",		pVar = "header2", 					pName = { english = "lag-free-circles", 					german = "lag-freie-kreise", 								french = "Faibles graphiques ",														newlanguage = "", } 																																								}
+							self.menuT[5].submenu[5].submenu[5] 	= { icon = "fa-check-square-o",		note = nil,									pType = "Boolean",		pVar = "lfc", 						pName = { english = "Use lag-free-circles", 				german = "Verwende Lag-Freie-Kreise", 						french = "Utiliser les faibles graphiques",											newlanguage = "", }, pDefault = true, pCallback = nil, pForceDefault = false 																										}
+							self.menuT[5].submenu[5].submenu[6] 	= { icon = "fa-arrows-h", 			note = nil,									pType = "Slider",		pVar = "quality", 					pName = { english = "Set circle segments", 					german = "Setze Kreis Segmente", 							french = "D&#233;finisser le nombre de segments de cercle",							newlanguage = "", }, pDefault = 6, pMinValue = 3, pMaxValue = 60, pStep = 3, pCallback = nil, pForceDefault = false 																}
+							self.menuT[5].submenu[5].submenu[7] 	= { icon = "fa-arrows-h", 			note = nil,									pType = "Slider",		pVar = "width", 					pName = { english = "Set circle width", 					german = "Setze Kreis Breite", 								french = "D&#233;finisser la largeur du cercle",									newlanguage = "", }, pDefault = 2, pMinValue = 1, pMaxValue = 10, pStep = 1, pCallback = nil, pForceDefault = false 																}
+							self.menuT[5].submenu[5].submenu[8] 	= { icon = nil, 					note = "- Jax",								pType = "SectionE",		pVar = "header3", 					pName = { english = "Imagine if I had a real weapon!", 		german = "Stellt euch vor ich hätte eine richtige Waffe!", 	french = "Imaginez si j&#39;,avais une v&#233;ritable arme.", 						newlanguage = "", } 																																																										}
+					self.menuT[5].submenu[6] 						= { icon = "fa-arrow-circle-right", note = nil,									pType = "Menu",			pVar = "scan", 						pName = { english = "Unit scan", 							german = "Einheiten Scan", 									french = "Scan des unit&#233;s",													newlanguage = "", } 																																								}
+						self.menuT[5].submenu[6]["submenu"] 		= {																																																																																																																																			}
+							self.menuT[5].submenu[6].submenu[1] 	= { icon = nil, 					note = nil,									pType = "SectionS",		pVar = "header1", 					pName = { english = "scan radius", 							german = "scan reichweite", 								french = "Rayon de scan",															newlanguage = "", } 																																								}
+							self.menuT[5].submenu[6].submenu[2] 	= { icon = "fa-check-square-o",		note = nil,									pType = "Boolean",		pVar = "position", 					pName = { english = "Draw scan radius", 					german = "Zeichne Scan Reichweite", 						french = "Dessiner le rayon de scan",												newlanguage = "", }, pDefault = true, pCallback = nil, pForceDefault = false 																										}
+							self.menuT[5].submenu[6].submenu[3] 	= { icon = nil, 					note = nil,									pType = "ColorPick",	pVar = "colorinrange", 				pName = { english = "Choose scan (available) color (ARGB)", german = "Wähle Scan (verfügbar) Farbe (ARGB)", 			french = "Choississez la couleur du scan disponible (ARGB)",						newlanguage = "", }, pDefault = Graphics.ARGB(255,255,255,0), pCallback = nil, pForceDefault = false 																				}
+							self.menuT[5].submenu[6].submenu[4] 	= { icon = nil, 					note = nil,									pType = "ColorPick",	pVar = "coloroutrange", 			pName = { english = "Choose scan (unavailable) (ARGB)", 	german = "Wähle Scan (unverfürbar) Farbe (ARGB)", 			french = "Choississez la couleur du scan non disponible (ARGB)",					newlanguage = "", }, pDefault = Graphics.ARGB(255,255,0,255), pCallback = nil, pForceDefault = false 																				}
+							self.menuT[5].submenu[6].submenu[5] 	= { icon = nil, 					note = nil,									pType = "SectionS",		pVar = "header2", 					pName = { english = "scanned units", 						german = "abgescannte einheiten", 							french = "Unit&#233;s scann&#233;es",												newlanguage = "", } 																																								}
+							self.menuT[5].submenu[6].submenu[6] 	= { icon = "fa-check-square-o",		note = nil,									pType = "Boolean",		pVar = "unit", 						pName = { english = "Draw scanned units", 					german = "Zeichne gescannte Einheiten", 					french = "Dessiner les unit&#233;s scann&#233;es",									newlanguage = "", }, pDefault = true, pCallback = nil, pForceDefault = false 																										}
+							self.menuT[5].submenu[6].submenu[7] 	= { icon = nil, 					note = nil,									pType = "ColorPick",	pVar = "colorunit", 				pName = { english = "Choose a color (ARGB)", 				german = "Wähle eine Farbe (ARGB)", 						french = "Choississez la couleur (ARGB)",											newlanguage = "", }, pDefault = Graphics.ARGB(255,0,255,0), pCallback = nil, pForceDefault = false 																					}
+							self.menuT[5].submenu[6].submenu[8] 	= { icon = nil, 					note = nil,									pType = "SectionS",		pVar = "header3", 					pName = { english = "lag-free-circles", 					german = "lag-freie-kreise", 								french = "Faibles graphiques ",														newlanguage = "", } 																																								}
+							self.menuT[5].submenu[6].submenu[9] 	= { icon = "fa-check-square-o",		note = nil,									pType = "Boolean",		pVar = "lfc", 						pName = { english = "Use lag-free-circles", 				german = "Verwende Lag-Freie-Kreise", 						french = "Utiliser les faibles graphiques",											newlanguage = "", }, pDefault = false, pCallback = nil, pForceDefault = false 																										}
+							self.menuT[5].submenu[6].submenu[10] 	= { icon = "fa-arrows-h", 			note = nil,									pType = "Slider",		pVar = "quality", 					pName = { english = "Set circle segments", 					german = "Setze Kreis Segmente", 							french = "D&#233;finisser le nombre de segments de cercle",							newlanguage = "", }, pDefault = 8, pMinValue = 4, pMaxValue = 48, pStep = 4, pCallback = nil, pForceDefault = false 																}
+							self.menuT[5].submenu[6].submenu[11] 	= { icon = "fa-arrows-h", 			note = nil,									pType = "Slider",		pVar = "width", 					pName = { english = "Set circle width", 					german = "Setze Kreis Breite", 								french = "D&#233;finisser la largeur du cercle",									newlanguage = "", }, pDefault = 2, pMinValue = 1, pMaxValue = 10, pStep = 1, pCallback = nil, pForceDefault = false 																}
+							self.menuT[5].submenu[6].submenu[12] 	= { icon = nil, 					note = "- Katarina",						pType = "SectionE",		pVar = "header4", 					pName = { english = "Blood for Noxus!", 					german = "Blut für Noxus.", 								french = "Du sang pour Noxus!", 													newlanguage = "", } 																																																										}
+					if myHero.charName ~= "JarvanIV" then
+						self.menuT[5].submenu[7] 					= { icon = "fa-arrow-circle-right", note = nil,									pType = "Menu",			pVar = "info", 						pName = { english = "Jump information", 					german = "Sprung Information", 								french = "Informations pour le saut",												newlanguage = "", } 																																								}
+							self.menuT[5].submenu[7]["submenu"] 	= {																																																																																																																																			}
+								self.menuT[5].submenu[7].submenu[1] = { icon = nil, 					note = nil,									pType = "SectionS",		pVar = "header1", 					pName = { english = "jump information", 					german = "sprung informationen", 							french = "Information sur le saut",													newlanguage = "", } 																																								}
+								self.menuT[5].submenu[7].submenu[2] = { icon = "fa-check-square-o",		note = nil,									pType = "Boolean",		pVar = "position", 					pName = { english = "Draw jump information", 				german = "Zeichne Sprung Informationen", 					french = "Dessiner l&#39;information sur le saut",									newlanguage = "", }, pDefault = true, pCallback = nil, pForceDefault = false 																										}
+								self.menuT[5].submenu[7].submenu[3] = { icon = nil, 					note = nil,									pType = "ColorPick",	pVar = "color", 					pName = { english = "Choose a color (ARGB)", 				german = "Wähle eine Farbe (ARGB)", 						french = "Choississez la couleur (ARGB)",											newlanguage = "", }, pDefault = Graphics.ARGB(255,255,255,255), pCallback = nil, pForceDefault = false 																				}
+								self.menuT[5].submenu[7].submenu[4] = { icon = nil, 					note = nil,									pType = "SectionS",		pVar = "header2", 					pName = { english = "position", 							german = "position", 										french = "Position",																newlanguage = "", } 																																								}
+								self.menuT[5].submenu[7].submenu[5] = { icon = "fa-text-width", 		note = nil,									pType = "Slider",		pVar = "abszisse", 					pName = { english = "Adjust abszisse", 						german = "Bearbeite Abszisse", 								french = "R&#233;gler l&#39;abscisse",												newlanguage = "", }, pDefault = 0, pMinValue = -250, pMaxValue = 250, pStep = 2, pCallback = nil, pForceDefault = false 															}
+								self.menuT[5].submenu[7].submenu[6] = { icon = "fa-text-height", 		note = nil,									pType = "Slider",		pVar = "ordinate", 					pName = { english = "Adjust ordinate", 						german = "Bearbeite Ordinate", 								french = "R&#233;gler l&#39;ordonn&#233;e",											newlanguage = "", }, pDefault = -40, pMinValue = -250, pMaxValue = 250, pStep = 2, pCallback = nil, pForceDefault = false 															}
+								self.menuT[5].submenu[7].submenu[7] = { icon = "fa-text-font", 			note = nil,									pType = "Number",		pVar = "size", 						pName = { english = "Choose the text size", 				german = "Wähle die Text Größe", 							french = "Choississez la taille du texte",											newlanguage = "", }, pDefault = 20, pMinValue = 18, pMaxValue = 40, pCallback = nil, pForceDefault = false 																			}
+								self.menuT[5].submenu[7].submenu[8] = { icon = nil, 					note = "- Katarina",						pType = "SectionE",		pVar = "header3", 					pName = { english = "I can&#39;t wait.", 					german = "Ich kann nicht warten.", 							french = "Arr&#234;tez-donc de courir! J&#39;essaie de vous tuer.", 				newlanguage = "", } 																																																										}
+					end
+					self.menuT[5].submenu[8] 						= { icon = nil, 					note = "- Jarvan IV",						pType = "SectionE",		pVar = "header3", 					pName = { english = "Topple their forces!", 				german = "Rächt Ihre Truppen!", 							french = "&#201;crasons leurs troupes !", 											newlanguage = "", } 																																																										}
+			self.menuT[6] 											= { icon = nil, 					note = nil,									pType = "SectionS",		pVar = "header3", 					pName = { english = "ward jump settings", 					german = "augen sprung einstellungen",						french = "Param&#232;tres du Ward Jump",											newlanguage = "", } 																																								}
+			self.menuT[7] 											= { icon = "fa-sun-o", 				note = nil,									pType = "Menu",			pVar = "wardjump", 					pName = { english = "Ward Jump", 							german = "Augen Sprung", 									french = "Ward Jump",																newlanguage = "", } 																																								}
+				self.menuT[7]["submenu"] 							= {																																																																																																																																			}
+					self.menuT[7].submenu[1] 						= { icon = nil, 					note = nil,									pType = "SectionS",		pVar = "header1", 					pName = { english = "unit scan", 							german = "einheiten scan", 									french = "Scan d&#39;unit&#233;s",													newlanguage = "", } 																																								}
+					self.menuT[7].submenu[2] 						= { icon = "fa-arrows-h", 			note = nil,									pType = "Slider",		pVar = "scanradius", 				pName = { english = "Adjust scan radius", 					german = "Bearbeite Einheiten Scan Reichweite", 			french = "Ajuster le rayon de scan",												newlanguage = "", }, pDefault = 200, pMinValue = 0, pMaxValue = 500, pStep = 5, pCallback = function() self.debugtime = 255 end, pForceDefault = false 								}
+					self.menuT[7].submenu[3] 						= { icon = nil, 					note = "- Katarina",						pType = "SectionE",		pVar = "header2", 					pName = { english = "To the point.", 						german = "Auf den Punkt.", 									french = "Je jure que nous en finirons.", 											newlanguage = "", } 																																																										}
+			if myHero.charName ~= "JarvanIV" then
+				self.menuT[8] 										= { icon = "fa-sort", 				note = nil,									pType = "Menu",			pVar = "priority", 					pName = { english = "Priorities", 							german = "Prioritäten", 									french = "Priorit&#233;s",															newlanguage = "", } 																																								}
+					self.menuT[8]["submenu"] 						= {																																																																																																																																			}
+						self.menuT[8].submenu[1] 					= { icon = nil, 					note = nil,									pType = "SectionS",		pVar = "header1", 					pName = { english = "wards", 								german = "augen", 											french = "wards",																	newlanguage = "", } 																																								}
+						self.menuT[8].submenu[2] 					= { icon = "fa-check-square-o",		note = self.menuN.sightWard.img,			pType = "Boolean",		pVar = "sightwardBoolean", 			pName = { english = "Use Stealth Ward", 					german = "Verwende Getarntes Auge", 						french = "Utiliser la Balise Camoufl&#233;e (Ward verte)",							newlanguage = "", }, pDefault = true, pCallback = nil, pForceDefault = false 																										}
+						self.menuT[8].submenu[3] 					= { icon = "fa-arrows-h", 			note = self.menuN.sightWard.img,			pType = "Slider",		pVar = "sightwardSlider", 			pName = { english = "Set priority", 						german = "Setze Priorität", 								french = "D&#233;finir la priorit&#233;",											newlanguage = "", }, pDefault = 5, 	pMinValue = 1, pMaxValue = 7, pStep = 1, pCallback = nil, pForceDefault = false 																}
+						self.menuT[8].submenu[4] 					= { icon = "fa-check-square-o",		note = self.menuN.VisionWard.img,			pType = "Boolean",		pVar = "VisionWardBoolean", 		pName = { english = "Use Vision Ward", 						german = "Verwende Magisches Auge", 						french = "Utiliser la Balise de Vision (Ward rose)",								newlanguage = "", }, pDefault = true, pCallback = nil, pForceDefault = false 																										}
+						self.menuT[8].submenu[5] 					= { icon = "fa-arrows-h", 			note = self.menuN.VisionWard.img,			pType = "Slider",		pVar = "VisionWardSlider", 			pName = { english = "Set priority", 						german = "Setze Priorität", 								french = "D&#233;finir la priorit&#233;",											newlanguage = "", }, pDefault = 7, 	pMinValue = 1, pMaxValue = 7, pStep = 1, pCallback = nil, pForceDefault = false 																}
+						self.menuT[8].submenu[6] 					= { icon = nil, 					note = nil,									pType = "SectionS",		pVar = "header2", 					pName = { english = "trinkets", 							german = "Schmuck", 										french = "Trinkets",																newlanguage = "", } 																																								}
+						self.menuT[8].submenu[7] 					= { icon = "fa-check-square-o",		note = self.menuN.TrinketTotemLvl1.img,		pType = "Boolean",		pVar = "TrinketTotemLvl1Boolean", 	pName = { english = "Use Warding Totem", 					german = "Verwende Abwertotem", 							french = "Utiliser le Totem Baliseur (Relique - ward basique)",						newlanguage = "", }, pDefault = true, pCallback = nil, pForceDefault = false 																										}
+						self.menuT[8].submenu[8] 					= { icon = "fa-arrows-h", 			note = self.menuN.TrinketTotemLvl1.img,		pType = "Slider",		pVar = "TrinketTotemLvl1Slider", 	pName = { english = "Set priority", 						german = "Setze Priorität", 								french = "D&#233;finir la priorit&#233;",											newlanguage = "", }, pDefault = 1, 	pMinValue = 1, pMaxValue = 7, pStep = 1, pCallback = nil, pForceDefault = false 																}
+						self.menuT[8].submenu[9] 					= { icon = "fa-check-square-o",		note = self.menuN.TrinketTotemLvl2.img,		pType = "Boolean",		pVar = "TrinketTotemLvl2Boolean", 	pName = { english = "Use Greater Totem", 					german = "Verwende Großes Totem", 							french = "Utiliser le Totem Baliseur (Relique - Niveau 9+)",						newlanguage = "", }, pDefault = true, pCallback = nil, pForceDefault = false 																										}
+						self.menuT[8].submenu[10] 					= { icon = "fa-arrows-h", 			note = self.menuN.TrinketTotemLvl2.img,		pType = "Slider",		pVar = "TrinketTotemLvl2Slider", 	pName = { english = "Set priority", 						german = "Setze Priorität", 								french = "D&#233;finir la priorit&#233;",											newlanguage = "", }, pDefault = 2, 	pMinValue = 1, pMaxValue = 7, pStep = 1, pCallback = nil, pForceDefault = false 																}
+						self.menuT[8].submenu[11] 					= { icon = "fa-check-square-o",		note = self.menuN.TrinketTotemLvl3.img,		pType = "Boolean",		pVar = "TrinketTotemLvl3Boolean", 	pName = { english = "Use Greater Stealth Totem",			german = "Verwende Großes getarntes Totem",					french = "Utiliser le Grand Totem Camoufl&#233; (Relique - &#233;volution jaune)",	newlanguage = "", }, pDefault = true, pCallback = nil, pForceDefault = false 																										}
+						self.menuT[8].submenu[12] 					= { icon = "fa-arrows-h", 			note = self.menuN.TrinketTotemLvl3.img,		pType = "Slider",		pVar = "TrinketTotemLvl3Slider", 	pName = { english = "Set priority", 						german = "Setze Priorität",									french = "D&#233;finir la priorit&#233;",											newlanguage = "", }, pDefault = 3, 	pMinValue = 1, pMaxValue = 7, pStep = 1, pCallback = nil, pForceDefault = false 																}
+						self.menuT[8].submenu[13] 					= { icon = "fa-check-square-o",		note = self.menuN.TrinketTotemLvl3B.img,	pType = "Boolean",		pVar = "TrinketTotemLvl3BBoolean", 	pName = { english = "Use Greater Vision Totem", 			german = "Verwende Großes sehendes Totem", 					french = "Utiliser le Grand Totem de vision (Relique - &#233;volution rose)",		newlanguage = "", }, pDefault = true, pCallback = nil, pForceDefault = false 																										}
+						self.menuT[8].submenu[14] 					= { icon = "fa-arrows-h", 			note = self.menuN.TrinketTotemLvl3B.img,	pType = "Slider",		pVar = "TrinketTotemLvl3BSlider", 	pName = { english = "Set priority", 						german = "Setze Priorität", 								french = "D&#233;finir la priorit&#233;",											newlanguage = "", }, pDefault = 6, 	pMinValue = 1, pMaxValue = 7, pStep = 1, pCallback = nil, pForceDefault = false 																}
+						self.menuT[8].submenu[15] 					= { icon = nil, 					note = nil,									pType = "SectionS",		pVar = "header3", 					pName = { english = "others", 								german = "sonstige", 										french = "Autres",																	newlanguage = "", } 																																								}
+						self.menuT[8].submenu[16] 					= { icon = "fa-check-square-o",		note = self.menuN.ItemGhostWard.img,		pType = "Boolean",		pVar = "ItemGhostWardBoolean", 		pName = { english = "Use (Ruby) Sightstone", 				german = "Verwende Sehender (Rubin)stein",					french = "Utiliser le Ruby de vision (contient 4 wards)",							newlanguage = "", }, pDefault = true, pCallback = nil, pForceDefault = false 																										}
+						self.menuT[8].submenu[17] 					= { icon = "fa-arrows-h", 			note = self.menuN.ItemGhostWard.img,		pType = "Slider",		pVar = "ItemGhostWardSlider", 		pName = { english = "Set priority", 						german = "Setze Priorität", 								french = "D&#233;finir la priorit&#233;",											newlanguage = "", }, pDefault = 4, pMinValue = 1, pMaxValue = 7, pStep = 1, pCallback = nil, pForceDefault = false 																	}
+						self.menuT[8].submenu[18] 					= { icon = nil, 					note = "- Jax",								pType = "SectionE",		pVar = "header4", 					pName = { english = "Ready for battle!", 					german = "Bereit für den Kampf!",							french = "Pr&#234;t pour le combat.", 												newlanguage = "", } 																																																										}
+			end
+			self.menuT[9] 											= { icon = nil, 					note = nil,									pType = "SectionS",		pVar = "header4", 					pName = { english = "other settings", 						german = "sonstige einstellungen", 							french = "Autres param&#232;tres",													newlanguage = "", } 																																								}
+			self.menuT[10] 											= { icon = "fa-flag", 				note = nil,									pType = "Menu",			pVar = "language", 					pName = { english = "Language", 							german = "Sprache", 										french = "Langue",																	newlanguage = "", } 																																								}
+				self.menuT[10]["submenu"] 							= {																																																																																																																																			}
+					self.menuT[10].submenu[1] 						= { icon = nil, 					note = nil,									pType = "SectionS",		pVar = "header1", 					pName = { english = "language", 							german = "sprache", 										french = "langue",																	newlanguage = "", } 																																								}
+					self.menuT[10].submenu[2] 						= { icon = "fa-sort-alpha-asc", 	note = nil,									pType = "DropDown",		pVar = "language", 					pName = { english = "Choose a language", 					german = "Wähle eine Sprache", 								french = "Choisir une langue",														newlanguage = "", }, pDefault = 1, pDropTable = { "English", "Deutsch", "Français" }, pCallback = function() self:Update_Language() end, pForceDefault = false 									}
+					self.menuT[10].submenu[3] 						= { icon = "fa-info", 				note = nil,									pType = "Button",		pVar = "info", 						pName = { english = "translated by prankSTAR", 				german = "Übersetzt von prankSTAR", 						french = "Traduit par GNAAAAR",														newlanguage = "", } 																																								}
+					self.menuT[10].submenu[4] 						= { icon = nil, 					note = "- Lee&#39;Sin",						pType = "SectionE",		pVar = "header2", 					pName = { english = "Their heartbeats quicken.", 			german = "Ihre Herzen schlagen schneller", 					french = "Leurs c&#338;urs s&#39;emballent.", 										newlanguage = "", } 																																																										}
+			self.menuT[11] 											= { icon = "fa-folder", 			note = nil,									pType = "Menu",			pVar = "menuconfig", 				pName = { english = "MenuConfig", 							german = "Menu", 											french = "Configuration du menu",													newlanguage = "", } 																																								}
+				self.menuT[11]["submenu"] 							= {																																																																																																																																			}
+					self.menuT[11].submenu[1] 						= { icon = nil, 					note = nil,									pType = "SectionS",		pVar = "header1", 					pName = { english = "gamestart", 							german = "spielbeginn", 									french = "D&#233;but de la partie",													newlanguage = "", } 																																								}
+					self.menuT[11].submenu[2] 						= { icon = "fa-check-square-o",		note = nil,									pType = "Boolean",		pVar = "start", 					pName = { english = "Activate message on GameStart", 		german = "Aktiviere Nachricht am Spielanfang", 				french = "Activer les message en d&#233;but de partie",								newlanguage = "", }, pDefault = true, pCallback = nil, pForceDefault = false 																										}
+					self.menuT[11].submenu[3] 						= { icon = nil, 					note = nil,									pType = "SectionS",		pVar = "header2", 					pName = { english = "settings storage", 					german = "Einstellungs Speicherung", 						french = "Param&#232;tres de sauvegarde",											newlanguage = "", } 																																								}
+					self.menuT[11].submenu[4] 						= { icon = "fa-check-square-o",		note = nil,									pType = "Boolean",		pVar = "reset", 					pName = { english = "Reset settings", 						german = "Einstellungen zurücksetzen", 						french = "R&#233;initialiser les param&#232;tres",									newlanguage = "", }, pDefault = false, pCallback = function() self:Update_Default() end, pForceDefault = true 																		}
+					self.menuT[11].submenu[5] 						= { icon = nil, 					note = "- Jarvan IV",						pType = "SectionE",		pVar = "header3", 					pName = { english = "I love a challenge.", 					german = "Ich liebe eine Herrausforderung!", 				french = "J&#39;adore les d&#233;fis.", 											newlanguage = "", } 																																																										}
+			self.menuT[12] 											= { icon = nil, 					note = nil,									pType = "SectionS",		pVar = "header5", 					pName = { english = "about the script", 					german = "über das skript", 								french = "A propos du script",														newlanguage = "", } 																																								}
+			self.menuT[13] 											= { icon = "fa-info-circle", 		note = nil,									pType = "Button",		pVar = "version", 					pName = { english = "Version: " .. self.version, 			german = "Version: " .. self.version, 						french = "Version: " .. self.version,												newlanguage = "", } 																																								}
+			self.menuT[14] 											= { icon = "fa-user", 				note = nil,									pType = "Button",		pVar = "author", 					pName = { english = "Author: " .. self.author, 				german = "Author: " .. self.author, 						french = "Auteur: " .. self.author,													newlanguage = "", } 																																								}
+			self.menuT[15] 											= { icon = "fa-upload", 			note = nil,									pType = "Button",		pVar = "update", 					pName = { english = "Updated: " .. self.updated, 			german = "Letzte Aktualisierung: " .. self.updated, 		french = "Mise à jour: " .. self.updated,											newlanguage = "", } 																																								}
+			self.menuT[17] 											= { icon = nil, 					note = nil,									pType = "SectionE",		pVar = "header6", 					pName = { english = "next generation script", 				german = "skript der nächsten generation", 					french = "Prochaine g&#233;n&#233;ration de scripts",								newlanguage = "", } 																																								}--]]
+	end
+
+	function PAS:Load_Prin()
+		if self.menu.menuconfig.start:Value() then
+			Game.Chat.Print("<b><font color=\"#80c31b\">[PS] Anti Stealth</font></b> <font color=\"#FFFFFF\">- Loaded successfully <u>v" .. self.version .. "</u>.")
+		end
+	end
+
+	function PAS:Load_Menu()
+		local function loop(givenMenu, givenTable)
+			for index, table in pairs(givenTable) do
+				if self.updateB then
+					if givenMenu ~= nil and givenMenu[table.pVar] == nil then
+						if table.pType == "Menu" then
+							givenMenu:Menu(table.pVar, table.pName.english)
+						elseif table.pType:lower():find("section") then
+							givenMenu:Section(table.pVar, table.pName.english)
+						elseif table.pType == "Button" then
+							givenMenu:Button(table.pVar, table.pName.english)
+						elseif table.pType == "Empty" then
+							givenMenu:Empty(table.pVar, table.pName.english)
+						elseif table.pType == "KeyBinding" then
+							givenMenu:KeyBinding(table.pVar, table.pName.english, table.pKey1, table.pKey1Toggle, table.pDefault, table.pCallback, table.pForceDefault, table.pKey2, table.pKey2Toggle)
+						elseif table.pType == "Boolean" then
+							givenMenu:Boolean(table.pVar, table.pName.english, table.pDefault, table.pCallback, table.pForceDefault)
+						elseif table.pType == "ColorPick" then
+							givenMenu:ColorPick(table.pVar, table.pName.english, table.pDefault, table.pCallback, table.pForceDefault)
+						elseif table.pType == "Slider" then
+							givenMenu:Slider(table.pVar, table.pName.english, table.pDefault, table.pMinValue, table.pMaxValue, table.pStep, table.pCallback, table.pForceDefault)
+						elseif table.pType == "Number" then
+							givenMenu:Number(table.pVar, table.pName.english, table.pDefault, table.pMinValue, table.pMaxValue, table.pCallback, table.pForceDefault)
+						elseif table.pType == "DropDown" then
+							givenMenu:DropDown(table.pVar, table.pName.english, table.pDefault, table.pDropTable, table.pCallback, table.pForceDefault)
+						end
+					end
+
+					DelayAction(function()
+						self.updateB = false
+						self.updateL = true
+						self.updateI = true
+						self.updateN = true
+						loop(self.menu, self.menuT)
+					end, .2)
+				end
+
+				if self.updateL then
+					local number, string = self.menu.language.language:Value()
+					local language = (({ [1] = "english", [2] = "german", [3] = "french", [4] = "dutch", [5] = "korean", [6] = "greek", [7] = "chinese", [8] = "portuguesebrazil", [9] = "turkish" })[tonumber(number)])
+					local function color(x, t) return 
+						t:find("Section") and (t == "SectionS" and "<font color=\"#80c31b\">" .. x .. "</font>" or "<font color=\"#00B3F7\">&#34" .. x .. "&#34</font>") or x
+					end
+					givenMenu[table.pVar]:Name(color(table.pName[language], table.pType))
+				end
+
+				if self.updateI then
+					givenMenu[table.pVar]:Icon(table.icon)
+				end
+
+				if self.updateD then
+					givenMenu[table.pVar]:Value(table.pDefault)
+				end
+
+				if self.updateN then
+					if table.note then
+						givenMenu[table.pVar]:Note(table.note)
+					end
+				end
+
+				if table.submenu ~= nil and table.pVar ~= nil and table.pVar ~= "submenu" then
+					loop(givenMenu[table.pVar], table.submenu)
+				end
+			end
+		end;loop(self.menu, self.menuT)
+	end
+
+	function PAS:Update_Language()
+		self.updateL = true
+		self:Load_Menu()
+		
+		local number, string = self.menu.language.language:Value()
+		local language = (({ [1] = "english", [2] = "german", [3] = "french", [4] = "dutch", [5] = "korean", [6] = "greek", [7] = "chinese", [8] = "portuguesebrazil", [9] = "turkish" })[tonumber(number)])
+		
+		self.menu:Name(self.menuT[1].pName[language])
+	end
+
+	function PAS:Update_Default()
+		self.updateD = true
+		self:Load_Menu()
+		DelayAction(function()
+			self:Update_Language()
+		end, .2)
+	end
+
+	----------------------------------------------------------------------
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Callback.Bind("GameStart", function()
+	PAS = PAS()
+end)
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+--globals
+
+	function Load_Globals()
+		Load_Enemy()
+		Load_Ally()
+		Callback.Bind("Draw", function() __mixColors() end)
+	end
+
+	----------------------------------------------------------------------
+
+	local Enemies = {}
+	function Load_Enemy() --Nebelwolfi
+		if myHero then
+			for i = 0,Game.HeroCount() do
+				local hero = Game.Hero(i)
+				if hero.team ~= myHero.team then
+					table.insert(Enemies, hero)
+				end
+			end
+		else
+			DelayAction(Load_Enem(), 1)
+		end
+	end
+
+	local Allies = {}
+	function Load_Ally() --Nebelwolfi
+		if myHero then
+			for i = 0,Game.HeroCount() do
+				local hero = Game.Hero(i)
+				if hero.team == myHero.team then
+					table.insert(Allies, hero)
+				end
+			end
+		else
+			DelayAction(Load_Ally(), 1)
+		end
+	end
+
+	local __colors = { { current = 255, step = .5, min = 0, max = 255, mode = -.5 }, { current = 255, step = 1, min = 0, max = 255, mode = -.5 }, { current = 255, step = 1.5, min = 0, max = 255, mode = -.5 }, }
+	function __mixColors()
+		for i = 1, #__colors do
+			local color = __colors[i]
+			color.current = color.current + color.mode * color.step
+
+			if color.current < color.min then
+				color.current = color.min
+				color.mode = 1
+			elseif color.current > color.max then
+				color.current = color.max
+				color.mode = -1
+			end
+		end
+	end
+
+	----------------------------------------------------------------------
+
+	local delayedActions, delayedActionsExecuter = {}, nil
+	function DelayAction(func, delay, args) --Nebelwolfi
+		if not delayedActionsExecuter then
+			function delayedActionsExecuter()
+				for t, funcs in pairs(delayedActions) do
+					if t <= os.clock() then
+						for _, f in ipairs(funcs) do 
+							if f.func then 
+								f.func(unpack(f.args or {}))
+							end
+						end
+						delayedActions[t] = nil
+					end
+				end
+			end
+			Callback.Bind("Tick", delayedActionsExecuter)
+		end
+		local t = os.clock() + (delay or 0)
+		if delayedActions[t] then 
+			table.insert(delayedActions[t], {func = func, args = args})
+		else 
+			delayedActions[t] = {{func = func, args = args}}
+		end
+	end
+
+	function DrawCircle2(position, radius, width, color, quality, lfc, onscreen)
+		position 	= position or myHero
+		radius 		= radius
+		width 		= width or 1
+		quality 	= quality or 24
+		color 		= color or Graphics.ARGB(255,255,255,255)
+		lfc 		= lfc
+		onscreen 	= onscreen or false
+
+		if lfc == true then
+			local screenMin = Graphics.WorldToScreen(Geometry.Vector3(position.x - radius, position.y, position.z + radius))
+			if onscreen and (screenMin.x >= 0 and screenMin.x <= WINDOW_W) and (screenMin.y >= 0 and screenMin.y <= WINDOW_H) or not onscreen then
+				radius = radius*.92
+				local quality = quality and 2 * math.pi / quality or 2 * math.pi / math.floor(radius / 10)
+				local width = width and width or 1
+				local a = Graphics.WorldToScreen(Geometry.Vector3(position.x + radius * math.cos(0), position.y, position.z - radius * math.sin(0)))
+				for theta = quality, 2 * math.pi + quality * 0.5, quality do
+					local b = Graphics.WorldToScreen(Geometry.Vector3(position.x + radius * math.cos(theta), position.y, position.z - radius * math.sin(theta)))
+					Graphics.DrawLine(Geometry.Vector2(a.x, a.y), Geometry.Vector2(b.x, b.y), tonumber(width), color)
+					a = b
+				end
+			end
+		elseif lfc == false then
+			local radius = radius or 300
+			Graphics.DrawCircle(position, radius, color)
+		end
+	end
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
